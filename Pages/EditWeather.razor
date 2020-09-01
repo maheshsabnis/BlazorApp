@@ -1,0 +1,41 @@
+﻿@page "/edit"
+@inject NavigationManager uriHelper
+<h3>Edit Weather Information</h3>
+
+<EditForm OnInvalidSubmit="@Navigate" Model="@Weather" OnValidSubmit="@display">
+    <div class="container">
+        <div class="form-group">
+            <label>Date</label>
+            <InputDate @bind-Value="@Weather.Date" class="form-control"></InputDate>
+        </div>
+        <div class="form-group">
+            <label>Summary</label>
+            <InputText @bind-Value="@Weather.Summary" class="form-control"></InputText>
+        </div>
+        <div class="form-group">
+            <label>TemperatureC</label>
+            <InputNumber @bind-Value="@Weather.TemperatureC" class="form-control"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label>Temperature F</label>
+            @*<InputNumber @bind-Value="@Weather.TemperatureF" class="form-control"></InputNumber>*@
+        </div>
+        <input type="submit" value="Save" />
+    </div>
+</EditForm>
+1
+@code {
+    [Parameter]
+    public WeatherForecast Weather { get; set; } = new WeatherForecast();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+    void display() { }
+
+    void Navigate()
+    {
+        uriHelper.NavigateTo("/fetachdata");
+    }
+}

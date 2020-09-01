@@ -1,0 +1,44 @@
+﻿@page "/create"
+@inject NavigationManager uriHelper;
+<h3>Create</h3>
+<EditForm Model="@Emp" OnValidSubmit="@CreateEmployee">
+    <div class="container">
+        <div class="form-group">
+            <label>EmpNo</label>
+            <InputNumber @bind-Value="@Emp.EmpNo" class="form-control"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label>EmpName</label>
+            <InputText @bind-Value="@Emp.EmpName" class="form-control"></InputText>
+        </div>
+        <div class="form-group">
+            <label>Salary</label>
+            <InputNumber @bind-Value="@Emp.Salary" class="form-control"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label>DeptName</label>
+            @*<InputText @bind-Value="@Emp.DeptName" class="form-control"></InputText>*@
+            <InputSelect @bind-Value="@Emp.DeptName" class="form-control">
+                @foreach (var dname in depts)
+                {
+                    <option value="@dname">@dname</option>
+                }
+            </InputSelect>
+        </div>
+        <input type="submit" value="Save"/>
+    </div>
+</EditForm>
+
+@code {
+    Employee Emp = new Employee();
+    List<Employee> employees = new List<Employee>();
+    List<string> depts = new List<string>()
+    {
+        "IT", "HRD", "SALES", "STORE", "ADMIN", "ACCOUNTS"
+    };
+    void CreateEmployee()
+    {
+        employees.Add(Emp);
+        uriHelper.NavigateTo("/fetchdata");
+    }
+}

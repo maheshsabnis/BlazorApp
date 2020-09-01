@@ -1,0 +1,43 @@
+﻿@page "/search"
+
+
+<table class="table table-bordered table-striped table-dark">
+    <thead>
+        <tr>
+            @foreach (string s in headers)
+            { 
+              <th>@s</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product prd in products)
+        {
+        <tr>
+            @*<td>@prd.ProductId</td>
+            <td>@prd.ProductName</td>
+            <td>@prd.CategoryName</td>
+            <td>@prd.Price</td>*@
+            @foreach (string s in headers)
+            {
+                <td>@prd.GetType().GetProperty(s).GetValue(prd,null)</td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
+
+ 
+@code {
+    Product product = new Product();
+    List<string> headers = new List<string>();
+    Products products = new Products();
+    protected override void OnInitialized()
+    {
+        PropertyInfo[] properties = typeof(Product).GetProperties();
+        foreach (var p in properties)
+        {
+            headers.Add(p.Name);
+        }
+    }
+}
